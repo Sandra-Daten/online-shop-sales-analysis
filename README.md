@@ -87,38 +87,38 @@ price, cost, discount, date, country, and category information.
 
 **For each order item, the following metrics are calculated:**
 
-Revenue = price × quantity × (1 - discount)
-Total Cost = cost × quantity
-Profit = Revenue - Total Cost
-Profit Margin = Profit / Revenue
+- Revenue = price × quantity × (1 - discount)
+- Total Cost = cost × quantity
+- Profit = Revenue - Total Cost
+- Profit Margin = Profit / Revenue
 
 The final joined dataset is saved as output/sales_clean.csv.
 
 **Analysis Results**
 
-Overall Sales
-Total orders: 33
-Unique customers: 16
-Units sold: 131
-Total revenue: 14,683.15
-Total cost: 8,640.00
-Total profit: 6,043.15
-Overall profit margin: 41.16%
-Average order value: 444.94
+- Overall Sales
+- - Total orders: 33
+- Unique customers: 16
+- Units sold: 131
+- Total revenue: 14,683.15
+- Total cost: 8,640.00
+- Total profit: 6,043.15
+- Overall profit margin: 41.16%
+- Average order value: 444.94
 
 **Product Analysis**
 
-Best-selling product by quantity: Smartphone Case --- 15 units
-Product with highest revenue: Laptop Pro --- 6,030.00
-Product with highest profit: Laptop Pro --- 1,480.00
-Product with highest profit margin: Smartphone Case --- 79.31%
+- Best-selling product by quantity: Smartphone Case --- 15 units
+- Product with highest revenue: Laptop Pro --- 6,030.00
+- Product with highest profit: Laptop Pro --- 1,480.00
+- Product with highest profit margin: Smartphone Case --- 79.31%
 
 **Category Analysis**
 
-Category with highest revenue: Electronics --- 8,473.00
-Category with highest profit: Electronics --- 2,823.00
-Category with highest profit margin: Accessories --- 62.52%
-Customer Analysis
+- Category with highest revenue: Electronics --- 8,473.00
+- Category with highest profit: Electronics --- 2,823.00
+- Category with highest profit margin: Accessories --- 62.52%
+- Customer Analysis
 
 The project creates a Top 10 customer table based on total revenue and
 calculates the number of unique orders, total revenue, and total profit
@@ -126,16 +126,16 @@ for each customer.
 
 **Among the Top 10 customers:**
 
-Most orders: Marko Petrovic --- 6 orders
-Highest spending: Marko Petrovic --- 3,886.25
-Highest profit contribution: Marko Petrovic --- 1,391.25
+- Most orders: Marko Petrovic --- 6 orders
+- Highest spending: Marko Petrovic --- 3,886.25
+- Highest profit contribution: Marko Petrovic --- 1,391.25
 
 Technologies
 
-Python
-Pandas
-CSV
-PyCharm
+- Python
+- Pandas
+- CSV
+- PyCharm
 
 ### How to Run
 
