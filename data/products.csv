@@ -1,0 +1,23 @@
+product_id,product_name,category,price,cost
+101,Laptop Pro,Electronics,900,650
+102,Wireless Mouse,Electronics,25,10
+103,Mechanical Keyboard,Electronics,75,35
+104,USB-C Hub,Electronics,45,20
+105,Running Shoes,Sports,120,55
+106,Yoga Mat,Sports,30,12
+107,Dumbbell Set,Sports,80,40
+108,Basketball,Sports,35,18
+109,Python Book,Books,40,15
+110,JavaScript Guide,Books,35,12
+111,Data Science Handbook,Books,50,20
+112,Office Chair,Furniture,350,180
+113,Standing Desk,Furniture,600,320
+114,Desk Lamp,Furniture,45,18
+115,Headphones,Electronics,150,70
+116,Smartphone Case,Electronics,15,3
+117,Fitness Tracker,Electronics,200,90
+118,Water Bottle,Sports,18,5
+119,Backpack,Accessories,65,25
+120,Sunglasses,Accessories,90,30
+121,Broken Product,Electronics,0,50
+122,Overpriced Cost,Electronics,100,150

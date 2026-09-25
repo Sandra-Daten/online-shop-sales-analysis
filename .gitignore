@@ -1,0 +1,5 @@
+
+.venv/
+main_learning.py
+.idea/
+.DS_Store
