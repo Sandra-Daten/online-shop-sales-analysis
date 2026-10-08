@@ -383,6 +383,14 @@ df_joined["total_cost"] = df_joined["cost"] * df_joined["quantity"];
 df_joined["profit"] = df_joined["revenue"] - df_joined["total_cost"];
 df_joined["profit_margin"] = df_joined["profit"] / df_joined["revenue"];
 
+# Zaokruživanje izračunatih metrika
+df_joined["revenue"] = df_joined["revenue"].round(2);
+df_joined["total_cost"] = df_joined["total_cost"].round(2);
+df_joined["profit"] = df_joined["profit"].round(2);
+df_joined["profit_margin"] = df_joined["profit_margin"].round(4);
+
+print(df_joined);
+
 # redosled kolona u finalnom dataset-u
 
 df_joined = df_joined[
