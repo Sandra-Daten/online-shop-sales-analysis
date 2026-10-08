@@ -1,4 +1,5 @@
 
+from pathlib import Path
 import pandas as pd
 
 print ("\n================================ 1. UCITAVANJE I UPOZNAVANJE PODATAKA ===================================\n");
@@ -7,10 +8,15 @@ print ("\n================================ 1. UCITAVANJE I UPOZNAVANJE PODATAKA 
 # Ucitavanje podataka
 # -----------------------------------------------------------------------------------------
 
-df_customers = pd.read_csv("data/customers.csv");
-df_products = pd.read_csv("data/products.csv");
-df_orders = pd.read_csv("data/orders.csv");
-df_order_items = pd.read_csv('data/order_items.csv');
+BASE = Path(__file__).parent
+
+OUTPUT = BASE / "output"
+OUTPUT.mkdir(exist_ok=True);
+
+df_customers = pd.read_csv(BASE / "data" / "customers.csv");
+df_products = pd.read_csv(BASE / "data" / "products.csv");
+df_orders = pd.read_csv(BASE / "data" / "orders.csv");
+df_order_items = pd.read_csv(BASE / "data" / "order_items.csv");
 
 # -----------------------------------------------------------------------------------------
 # Upoznavanje podataka
@@ -73,6 +79,28 @@ duplikati("ORDERS", df_orders);
 duplikati("ORDER_ITEMS", df_order_items);
 
 print(df_orders[df_orders.duplicated()]);
+
+print("\n// Duplirani kupci prema email adresi:\n");
+
+duplicate_customers = df_customers[
+    df_customers.duplicated(
+        subset=["email"],
+        keep=False
+    )
+];
+
+print(duplicate_customers);
+
+print("\n// Potencijalno duplirane stavke prema order_id i product_id:\n");
+
+duplicate_order_items = df_order_items[
+    df_order_items.duplicated(
+        subset=["order_id", "product_id"],
+        keep=False
+    )
+];
+
+print(duplicate_order_items);
 
 # Pronadjen je jedan duplikat u orders tabeli (order_id = 15034).
 # Duplikat ce biti uklonjen tokom ciscenja.
@@ -171,6 +199,20 @@ print("\n// Neispravni datum u tabeli 'df_orders':\n\n",
 # Pronadjene su neispravne vrednosti "invalid_date" u registration_date i "not_a_date" u order_date.
 # Zapisi ostaju u datasetu, a neispravni datumi ce tokom ciscenja biti konvertovani u NaT.
 
+# -----------------------------------------------------------------------------------------
+# Sumnjivi kupci
+# -----------------------------------------------------------------------------------------
+
+print(
+    df_customers[
+        df_customers["first_name"].str.contains(
+            "test|ghost",
+            case=False,
+            na=False
+        )
+    ]
+);
+
 
 
 print ("\n================================ 3. CISCENJE ================================\n");
@@ -181,17 +223,35 @@ df_orders_clean = df_orders.copy();
 df_order_items_clean = df_order_items.copy();
 
 # -----------------------------------------------------------------------------------------
-# Uklanjanje testnog customer-a sa nedostajucom country vrednoscu
+# Uklanjanje testnih customer-a
 # -----------------------------------------------------------------------------------------
 
-df_customers_clean = df_customers_clean[df_customers_clean["customer_id"] != 18];
+df_customers_clean = df_customers_clean[
+    ~df_customers_clean["first_name"].str.contains(
+        "test|ghost",
+        case=False,
+        na=False
+    )
+];
+
+# -----------------------------------------------------------------------------------------
+# Uklanjanje dupliranih customer-a prema email adresi
+# -----------------------------------------------------------------------------------------
+
+df_customers_clean = df_customers_clean.drop_duplicates(
+    subset=["email"],
+    keep="first"
+);
 
 # -----------------------------------------------------------------------------------------
 # Uklanjanje proizvoda sa nevalidnim price/cost vrednostima
 # -----------------------------------------------------------------------------------------
+# U df_products_clean sačuvaj redove iz df_products_clean kod kojih je price veći od nule i cost manji ili jednak price-u:
 
-df_products_clean = df_products_clean[df_products_clean["product_id"] != 121];
-df_products_clean = df_products_clean[df_products_clean["product_id"] != 122];
+df_products_clean = df_products_clean[
+    (df_products_clean["price"] > 0) &
+    (df_products_clean["cost"] <= df_products_clean["price"])
+];
 
 # -----------------------------------------------------------------------------------------
 # Uklanjanje duplikata
@@ -203,17 +263,34 @@ df_orders_clean = df_orders_clean.drop_duplicates();
 # Uklanjanje porudzbine koja pripada nepostojecem customer-u
 # -----------------------------------------------------------------------------------------
 
-df_orders_clean = df_orders_clean[df_orders_clean["order_id"] != 15032];
+df_orders_clean = df_orders_clean[
+    df_orders_clean["customer_id"].isin(df_customers_clean["customer_id"])
+];
 
 # -----------------------------------------------------------------------------------------
 # Uklanjanje nevalidnih stavki porudzbina
 # -----------------------------------------------------------------------------------------
 
-invalid_order_items = [62, 66, 67, 68, 69];
+df_order_items_clean = df_order_items_clean[
+    df_order_items_clean["product_id"].isin(df_products_clean["product_id"])
+];
 
 df_order_items_clean = df_order_items_clean[
-    ~df_order_items_clean["order_item_id"].isin(invalid_order_items)
+    df_order_items_clean["order_id"].isin(df_orders_clean["order_id"])
 ];
+
+df_order_items_clean = df_order_items_clean[
+    df_order_items_clean["quantity"] > 0
+];
+
+# -----------------------------------------------------------------------------------------
+# Uklanjanje dupliranih stavki porudzbina
+# -----------------------------------------------------------------------------------------
+
+df_order_items_clean = df_order_items_clean.drop_duplicates(
+    subset=["order_id", "product_id", "quantity"],
+    keep="first"
+);
 
 # -----------------------------------------------------------------------------------------
 # Konverzija datuma
@@ -247,10 +324,10 @@ print(df_customers_clean["country"].value_counts());
 # Cuvanje ociscenih podataka
 # -----------------------------------------------------------------------------------------
 
-df_customers_clean.to_csv("output/customers_clean.csv", index=False);
-df_products_clean.to_csv("output/products_clean.csv", index=False);
-df_orders_clean.to_csv("output/orders_clean.csv", index=False);
-df_order_items_clean.to_csv("output/order_items_clean.csv", index=False);
+df_customers_clean.to_csv(OUTPUT/"customers_clean.csv", index=False);
+df_products_clean.to_csv(OUTPUT/"products_clean.csv", index=False);
+df_orders_clean.to_csv(OUTPUT/"orders_clean.csv", index=False);
+df_order_items_clean.to_csv(OUTPUT/"order_items_clean.csv", index=False);
 
 
 
@@ -308,8 +385,6 @@ df_joined["profit_margin"] = df_joined["profit"] / df_joined["revenue"];
 
 # redosled kolona u finalnom dataset-u
 
-# print(df_joined.columns)
-
 df_joined = df_joined[
     [
         "customer_id",
@@ -354,9 +429,9 @@ print(f"Prosecna vrednost porudzbine: {average_order_value:.2f}");
 
 # -----------------------------------------------------------------------------------------
 # Cuvanje finalnog dataseta spremnog za analizu
-# -----------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------
 
-df_joined.to_csv("output/sales_clean.csv", index=False);
+df_joined.to_csv(OUTPUT/"sales_clean.csv", index=False);
 
 
 
@@ -490,8 +565,8 @@ print(top10_customers);
 # Kupac sa najvise porudzbina
 # -----------------------------------------------------------------------------------------
 
-top_orders_customer = top10_customers["Orders"].idxmax();
-highest_customer_orders = top10_customers["Orders"].max();
+top_orders_customer = customers_analysis["Orders"].idxmax();
+highest_customer_orders = customers_analysis["Orders"].max();
 
 print(
     f"{top_orders_customer[1]} ima najvise porudzbina - "
@@ -502,8 +577,8 @@ print(
 # Kupac sa najvecom potrosnjom
 # -----------------------------------------------------------------------------------------
 
-top_revenue_customer = top10_customers["Revenue"].idxmax();
-highest_customer_revenue = top10_customers["Revenue"].max();
+top_revenue_customer = customers_analysis["Revenue"].idxmax();
+highest_customer_revenue = customers_analysis["Revenue"].max();
 
 print(
     f"{top_revenue_customer[1]} je najvise potrosio - "
@@ -514,8 +589,8 @@ print(
 # Kupac koji donosi najveci profit
 # -----------------------------------------------------------------------------------------
 
-top_profit_customer = top10_customers["Profit"].idxmax();
-highest_customer_profit = top10_customers["Profit"].max();
+top_profit_customer = customers_analysis["Profit"].idxmax();
+highest_customer_profit = customers_analysis["Profit"].max();
 
 print(
     f"{top_profit_customer[1]} donosi najveci profit "

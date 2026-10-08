@@ -17,6 +17,7 @@ Python and Pandas. The workflow includes:
 - analyzing customer purchasing behavior
 
 ## Project Structure
+```
 
 onlineshop_sales_analysis/
 ├── data/
@@ -32,6 +33,7 @@ onlineshop_sales_analysis/
 │   └── sales_clean.csv
 ├── main.py
 └── README.md
+```
 
 ### Input Data
 
@@ -40,7 +42,7 @@ The analysis uses four CSV files:
 customers.csv --- customer information
 products.csv --- product information, prices, costs, and categories
 orders.csv --- orders, customers, dates, and discounts
-order_items.csv --- products and quantities belonging to eachorder
+order_items.csv --- products and quantities belonging to each order
 
 ### Data Quality Checks
 
@@ -63,8 +65,10 @@ instead of being automatically deleted.
 
 **The cleaning process includes:**
 
-- removing a test customer with a missing country value and no orders
+- removing test customers, including a customer with a missing country value and a Ghost Customer record
 - removing duplicate orders
+- removing duplicate customers based on email addresses
+- removing duplicate order items based on order ID, product ID, and quantity
 - removing products with invalid price/cost values and their related order items
 - removing an order linked to a non-existent customer
 - removing an order item linked to a non-existent product
@@ -73,7 +77,7 @@ instead of being automatically deleted.
 - converting invalid date values to NaT
 - standardizing country names
 
-The cleaned source tables are saved as new CSV files in the output/
+The cleaned source tables are saved as new CSV files in the `output`
 directory, while the original files remain unchanged.
 
 ### Data Transformation
@@ -92,31 +96,31 @@ price, cost, discount, date, country, and category information.
 - Profit = Revenue - Total Cost
 - Profit Margin = Profit / Revenue
 
-The final joined dataset is saved as output/sales_clean.csv.
+The final joined dataset is saved as `output/sales_clean.csv`.
 
-**Analysis Results**
+## Analysis Results
 
-- Overall Sales
-- - Total orders: 33
-- Unique customers: 16
-- Units sold: 131
-- Total revenue: 14,683.15
-- Total cost: 8,640.00
-- Total profit: 6,043.15
-- Overall profit margin: 41.16%
-- Average order value: 444.94
+### Overall Sales
+- Total orders: 32
+- Unique customers: 15
+- Units sold: 128
+- Total revenue: 13,683.15
+- Total cost: 7,950.00
+- Total profit: 5,733.15
+- Overall profit margin: 41.90%
+- Average order value: 427.60
 
-**Product Analysis**
+### Product Analysis
 
 - Best-selling product by quantity: Smartphone Case --- 15 units
-- Product with highest revenue: Laptop Pro --- 6,030.00
-- Product with highest profit: Laptop Pro --- 1,480.00
+- Product with highest revenue: Laptop Pro --- 5,130.00
+- Product with highest profit: Laptop Pro --- 1,230.00
 - Product with highest profit margin: Smartphone Case --- 79.31%
 
-**Category Analysis**
+## Category Analysis
 
-- Category with highest revenue: Electronics --- 8,473.00
-- Category with highest profit: Electronics --- 2,823.00
+- Category with highest revenue: Electronics --- 7,573.00
+- Category with highest profit: Electronics --- 2,573.00
 - Category with highest profit margin: Accessories --- 62.52%
 - Customer Analysis
 
@@ -124,13 +128,20 @@ The project creates a Top 10 customer table based on total revenue and
 calculates the number of unique orders, total revenue, and total profit
 for each customer.
 
-**Among the Top 10 customers:**
+
+### Customer Analysis:
+
+The project creates a Top 10 customer table based on total revenue and
+calculates the number of unique orders, total revenue, and total profit
+for each customer.
+
+**Among all customers:**
 
 - Most orders: Marko Petrovic --- 6 orders
 - Highest spending: Marko Petrovic --- 3,886.25
 - Highest profit contribution: Marko Petrovic --- 1,391.25
 
-Technologies
+### Technologies
 
 - Python
 - Pandas
@@ -141,11 +152,18 @@ Technologies
 
 Install Pandas if it is not already installed:
 
+```bash
 pip install pandas
+```
 
-Run the project from the project root directory:
+Run the project using Python:
 
+```bash
 python main.py
-
+```
 The program prints the data-quality checks and analysis results to the
-console and generates the cleaned CSV files in the output/ directory.
+console and generates the cleaned CSV files in the `output` directory.
+
+The project uses paths relative to the location of `main.py`, 
+so it can be executed from different working directories. 
+The `output` directory is created automatically if it does not exist.

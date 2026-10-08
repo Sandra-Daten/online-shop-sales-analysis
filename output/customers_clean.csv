@@ -14,6 +14,3 @@ customer_id,first_name,last_name,email,country,registration_date
 13,Petar,Lazarevic,petar.lazarevic@email.com,Serbia,2026-01-08
 14,Ivana,Ristic,ivana.ristic@email.com,Montenegro,2026-02-14
 15,Filip,Obradovic,filip.obradovic@email.com,Serbia,2026-03-20
-16,Milica,Ilic,milica.ilic@email.com,Serbia,2025-06-01
-17,Marko,Petrovic,marko.petrovic@email.com,Serbia,
-9999,Ghost,Customer,ghost@email.com,Serbia,2026-05-01

@@ -17,7 +17,6 @@ customer_id,first_name,last_name,email,country,registration_date,order_id,order_
 2,Ana,Jovanovic,ana.jovanovic@email.com,Serbia,2025-02-20,15022,2026-07-08,43,111,Data Science Handbook,Books,1,50,20,0.0,50.0,20,30.0,0.6
 2,Ana,Jovanovic,ana.jovanovic@email.com,Serbia,2025-02-20,15022,2026-07-08,44,114,Desk Lamp,Furniture,2,45,18,0.0,90.0,36,54.0,0.6
 2,Ana,Jovanovic,ana.jovanovic@email.com,Serbia,2025-02-20,15034,2026-09-05,64,111,Data Science Handbook,Books,2,50,20,0.0,100.0,40,60.0,0.6
-2,Ana,Jovanovic,ana.jovanovic@email.com,Serbia,2025-02-20,15034,2026-09-05,65,111,Data Science Handbook,Books,2,50,20,0.0,100.0,40,60.0,0.6
 3,Nikola,Stojanovic,nikola.stojanovic@email.com,Serbia,2025-03-10,15003,2026-01-22,5,103,Mechanical Keyboard,Electronics,1,75,35,0.1,67.5,35,32.5,0.48148148148148145
 3,Nikola,Stojanovic,nikola.stojanovic@email.com,Serbia,2025-03-10,15003,2026-01-22,6,115,Headphones,Electronics,1,150,70,0.1,135.0,70,65.0,0.48148148148148145
 3,Nikola,Stojanovic,nikola.stojanovic@email.com,Serbia,2025-03-10,15016,2026-05-18,31,107,Dumbbell Set,Sports,2,80,40,0.0,160.0,80,80.0,0.5
@@ -62,4 +61,3 @@ customer_id,first_name,last_name,email,country,registration_date,order_id,order_
 14,Ivana,Ristic,ivana.ristic@email.com,Montenegro,2026-02-14,15018,2026-06-02,36,110,JavaScript Guide,Books,2,35,12,0.0,70.0,24,46.0,0.6571428571428571
 15,Filip,Obradovic,filip.obradovic@email.com,Serbia,2026-03-20,15020,2026-06-20,39,105,Running Shoes,Sports,1,120,55,0.0,120.0,55,65.0,0.5416666666666666
 15,Filip,Obradovic,filip.obradovic@email.com,Serbia,2026-03-20,15020,2026-06-20,40,116,Smartphone Case,Electronics,10,15,3,0.0,150.0,30,120.0,0.8
-9999,Ghost,Customer,ghost@email.com,Serbia,2026-05-01,15031,2026-06-15,61,101,Laptop Pro,Electronics,1,900,650,0.0,900.0,650,250.0,0.2777777777777778
