@@ -448,8 +448,6 @@ def calculate_financial_metrics(df_joined):
     return df_joined
 
 
-
-
 def find_max(series):
     valid_series = series.dropna()
 
@@ -604,8 +602,6 @@ def analyze_sales(df_joined):
         print("Nema validnih podataka za analizu.")
 
 
-
-
 def analyze_customers(df_joined):
     print("\n================================ 7. CUSTOMER ANALYSIS ================================\n")
 
@@ -677,7 +673,7 @@ def analyze_customers(df_joined):
 
 
 def main():
-    
+
     df_customers, df_products, df_orders, df_order_items = load_data()
 
     check_data_quality(
